@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { Stack, useRouter, useSegments } from "expo-router";
-import { AuthProvider, useAuth } from "../context/AuthContext"; // Week 12 - Class Code
+import { AuthProvider, useAuth } from "../context/AuthContext";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { session, isLoading } = useAuth();
@@ -10,13 +10,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoading) return; // wait until we know if a session exists
+    if (isLoading) return; 
 
-    // true when the user is inside a protected tab screen (e.g. home, profile)
     const inTabGroup = segments[0] === "(tab)";
 
     if (!session && inTabGroup) {
-      // Not signed in, but trying to view a protected tab → kick to login
+      
       router.replace("/login");
     } else if (session && !inTabGroup) {
       

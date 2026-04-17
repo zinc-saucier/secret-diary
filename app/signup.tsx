@@ -148,14 +148,12 @@ const SignUp = () => {
               placeholderTextColor={""}
               value={value}
               onChangeText={onChange}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
+              autoCapitalize="words"
             />
           )}
         />
-        {errors.email && (
-          <Text style={styles.fieldError}>{errors.email.message}</Text>
+        {errors.name && (
+          <Text style={styles.fieldError}>{errors.name.message}</Text>
         )}
 
         {/* ── Email field ── */}
@@ -170,7 +168,10 @@ const SignUp = () => {
               placeholderTextColor={""}
               value={value}
               onChangeText={onChange}
-              autoCapitalize="words"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+              
             />
           )}
         />

@@ -7,7 +7,7 @@ export default function TabLayout() {
     <Tabs screenOptions={{ headerShown: false }}>
       <Stack>
         <Stack.Screen name="home" options={{ title: "Login" }} />
-        <Stack.Screen name="profile" options={{ title: "Sign Up" }} />
+        <Stack.Screen name="profile" options={{ title: "Profile" }} />
         <Stack.Screen name="Diary" options={{ title: "My Diary"}}/>
       </Stack>
       <Tabs.Screen
