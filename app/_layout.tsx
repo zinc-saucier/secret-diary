@@ -1,24 +1,49 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useEffect } from "react";
+import { Stack, useRouter, useSegments } from "expo-router";
+import { AuthProvider, useAuth } from "../context/AuthContext"; // Week 12 - Class Code
 
-export const unstable_settings = {
-  anchor: '(tabs)',
+const AuthGuard = ({ children }: { children: React.ReactNode }) => {
+  const { session, isLoading } = useAuth();
+  
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoading) return; // wait until we know if a session exists
+
+    // true when the user is inside a protected tab screen (e.g. home, profile)
+    const inTabGroup = segments[0] === "(tab)";
+
+    if (!session && inTabGroup) {
+      // Not signed in, but trying to view a protected tab → kick to login
+      router.replace("/login");
+    } else if (session && !inTabGroup) {
+      
+      router.replace("/(tab)/home");
+    }
+  }, [session, isLoading, segments]);
+
+  if (isLoading) return null;
+
+  return <>{children}</>;
 };
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+// ── Root Layout ───────────────────────────────────────────────────────────────
 
+const RootLayout = () => {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+  
+    <AuthProvider>
+      <AuthGuard>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tab)" />
+          <Stack.Screen name="login" />
+          <Stack.Screen name="signup" />
+        </Stack>
+      </AuthGuard>
+    </AuthProvider>
   );
-}
+};
+
+export default RootLayout;
