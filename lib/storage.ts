@@ -3,8 +3,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const STORAGE_KEYS = {
-  PROFILE: "profile",
-  CLICKER_STATS: "stats",
+  diary: "diary",
+
 } as const;
 
 export async function get<T>(key: string): Promise<T | null> {
