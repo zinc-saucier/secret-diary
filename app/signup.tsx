@@ -18,6 +18,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext"; 
 import { theme } from "@/styles/theme";
+import { supabase } from "@/lib/supabase";
 
 // ── Validation schema ─────────────────────────────────────────────────────────
 
@@ -65,7 +66,7 @@ const SignUp = () => {
     try {
       setAuthError(null);
       setIsSubmitting(true);
-      await signUp(data.email, data.password); 
+      await signUp(data.email, data.password, data.name);
       setEmailSent(true);
     } catch (e) {
       setAuthError(
@@ -143,7 +144,7 @@ const SignUp = () => {
           name="name"
           render={({ field: { onChange, value } }) => (
             <TextInput
-              style={[styles.input, errors.email && styles.inputError]}
+              style={[styles.input, errors.name && styles.inputError]}
               placeholder="What should we call you?"
               placeholderTextColor={""}
               value={value}

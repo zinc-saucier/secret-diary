@@ -13,7 +13,7 @@ type AuthContextType = {
   user: User | null; // shortcut for session?.user
   isLoading: boolean; // true while loading session from storage
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -62,8 +62,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // On success: onAuthStateChange fires → session state updates → AuthGuard redirects
   };
 
-  const signUp = async ( email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
+  const signUp = async ( email: string, password: string, name: string) => {
+    const { error } = await supabase.auth.signUp({ email, password, options: {data: {display_name: `${name}`}} });
     if (error) throw error;
     // Note: Supabase may require email confirmation before the session is set.
     // If "Confirm email" is enabled in Supabase → user gets a verification email.
