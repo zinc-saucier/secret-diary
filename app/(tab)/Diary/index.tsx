@@ -19,6 +19,9 @@ const index = () => {
   }
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Your Diary</Text>
+      </View>
       <Stack.Screen
         options={{
           title: 'My Secret Diary',
@@ -41,6 +44,19 @@ const index = () => {
 export default index
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.bg
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 36,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: theme.colors.text,
+  },
   buttontxt: {
     alignSelf: 'flex-end',
     paddingHorizontal: 14,
@@ -61,8 +77,5 @@ const styles = StyleSheet.create({
     gap: 12,
 
   },
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.bg
-  }
+  
 })
