@@ -1,15 +1,21 @@
 import { NoteItem } from '@/components/noteitem'
 import { useNotes } from '@/hooks/useNotes'
+import { remove } from '@/lib/storage'
 import { theme } from '@/styles/theme'
 import { router, Stack } from 'expo-router'
 import React from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 
+
 const index = () => {
-  const { notes } = useNotes();
+  const { notes, deleteNote } = useNotes();
 
   const newNote = () => {
     router.push('/Diary/note/new')
+  }
+  const onRemove = (id: string) => {
+    deleteNote(id);
+    remove(id);
   }
   return (
     <View>
@@ -25,7 +31,7 @@ const index = () => {
 
       <FlatList data={notes}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => <NoteItem key={index} item={item} onTogglePin={() => true} onRemove={() => true} />}
+        renderItem={({ item, index }) => <NoteItem key={index} item={item} onTogglePin={() => true} onRemove={() => onRemove(item.id)} />}
         style={styles.noteList} />
     </View>
   )
