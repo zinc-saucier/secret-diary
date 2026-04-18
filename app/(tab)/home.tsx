@@ -32,7 +32,7 @@ const home = () => {
 
   return (
     <View style={""}>
-      <Text style={""}>Welcome to your Secret Diary {session?.user.email}</Text>
+      <Text style={""}>Welcome to your Secret Diary {session?.user.user_metadata.display_name}</Text>
       <Pressable onPress={handleSignOut}>
         <Text>{signOutText}</Text>
         

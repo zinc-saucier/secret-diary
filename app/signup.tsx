@@ -18,12 +18,9 @@ import { useForm, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext"; 
 import { theme } from "@/styles/theme";
-import { supabase } from "@/lib/supabase";
 
 // ── Validation schema ─────────────────────────────────────────────────────────
 
-// .refine() lets Zod validate across multiple fields at once.
-// The path: ['confirmPassword'] makes the error appear under that specific field.
 const signUpSchema = z
   .object({
     name: z.string().trim().min(2),
@@ -78,6 +75,7 @@ const SignUp = () => {
   };
 
   // ── Success state (email confirmation required) ───────────────────────────
+  // email confirmation requirement currently disabled during development and testing
 
   if (emailSent) {
     return (
@@ -117,7 +115,7 @@ const SignUp = () => {
         <View style={styles.header}>
           <View style={styles.logoCircle}>
             <Ionicons
-              name="school-outline"
+              name="book-outline"
               size={36}
               color={""}
             />
@@ -232,7 +230,7 @@ const SignUp = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#ffffff" />
+            <ActivityIndicator color="#808080" />
           ) : (
             <Text style={styles.buttonText}>Create Account</Text>
           )}
