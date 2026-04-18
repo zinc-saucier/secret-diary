@@ -1,11 +1,14 @@
 import { theme } from "@/styles/theme";
 import { Note } from "@/types";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export const NoteItem = ({ item, onTogglePin, onRemove }: { item: Note, onTogglePin: (id: string) => void; onRemove: (id: string) => void; }) => {
 
-    const onEdit = () => { }
+    const onEdit = () => {
+        router.push(`/Diary/note/${item.id}`)
+    }
 
     const [pressed, setPressed] = useState(false);
     return (

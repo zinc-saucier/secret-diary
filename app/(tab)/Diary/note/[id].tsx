@@ -1,24 +1,49 @@
 import { useNotes } from "@/hooks/useNotes";
+import * as storage from '@/lib/storage';
 import { theme } from "@/styles/theme";
+import { Note } from "@/types";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-
 const NoteEditorScreen = () => {
     const { id } = useLocalSearchParams();
     const isNew = id === 'new'
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
-
+    const [note, setNote] = useState<Note | null>()
     const isDisabled = title.length <= 0 || body.length <= 0;
 
-    const { addNote } = useNotes()
+    const { addNote, notes } = useNotes()
 
+    useEffect(() => {
+
+        async function loadNote(id: string) {
+            console.log("loaded id", id)
+            const saved = await storage.get<Note>(id)
+            setNote(saved!);
+            console.log("retrieved", saved)
+        }
+        if (!isNew) {
+            let key: string = '';
+            for (let i = 0; i < id.length; i++) {
+                key = key + id[i]
+            }
+
+            console.log("key", key)
+            loadNote(key)
+        }
+    }, [])
     const saveNote = () => {
+        async function save(note: Note) {
+            storage.set(note.id, note)
+        }
         if (isNew) {
             addNote(title, body);
-
         }
+        else {
+            save(note!);
+        }
+
         router.push('/(tab)/Diary');
     }
 
@@ -29,13 +54,13 @@ const NoteEditorScreen = () => {
             }} />
             <View style={styles.newNote}>
                 <TextInput
-                    placeholder="note Title" placeholderTextColor={theme.colors.muted}
+                    placeholder={note ? note.title : "note Title"} placeholderTextColor={theme.colors.muted}
                     value={title}
                     onChangeText={setTitle}
                     style={styles.titleInput} />
 
                 <TextInput
-                    placeholder="Write a Note..." placeholderTextColor={theme.colors.muted}
+                    placeholder={note ? note.body : "Write a Note..."} placeholderTextColor={theme.colors.muted}
                     value={body}
                     onChangeText={setBody}
                     multiline
