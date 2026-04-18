@@ -41,7 +41,7 @@ const signUpSchema = z
 
 type SignUpForm = z.infer<typeof signUpSchema>;
 
-// ── Component ─────────────────────────────────────────────────────────────────
+//sign up form
 
 const SignUp = () => {
   const { signUp } = useAuth(); 
@@ -74,8 +74,8 @@ const SignUp = () => {
     }
   };
 
-  // ── Success state (email confirmation required) ───────────────────────────
-  // email confirmation requirement currently disabled during development and testing
+ 
+  // email confirmation requirement currently disabled for development and testing
 
   if (emailSent) {
     return (
@@ -130,12 +130,12 @@ const SignUp = () => {
             <Ionicons
               name="alert-circle-outline"
               size={16}
-              color={""}
+              color={theme.colors.error}
             />
             <Text style={styles.errorBannerText}>{authError}</Text>
           </View>
         )}
-        {/* name field */}
+        {/* user name field */}
          <Text style={styles.label}>User Name</Text>
         <Controller
           control={control}
@@ -144,7 +144,7 @@ const SignUp = () => {
             <TextInput
               style={[styles.input, errors.name && styles.inputError]}
               placeholder="What should we call you?"
-              placeholderTextColor={""}
+              placeholderTextColor={theme.colors.muted}
               value={value}
               onChangeText={onChange}
               autoCapitalize="words"
@@ -164,7 +164,7 @@ const SignUp = () => {
             <TextInput
               style={[styles.input, errors.email && styles.inputError]}
               placeholder="you@example.com"
-              placeholderTextColor={""}
+              placeholderTextColor={theme.colors.muted}
               value={value}
               onChangeText={onChange}
               keyboardType="email-address"
@@ -187,7 +187,7 @@ const SignUp = () => {
             <TextInput
               style={[styles.input, errors.password && styles.inputError]}
               placeholder="Min 8 chars, upper, lower, number, symbol"
-              placeholderTextColor={""}
+              placeholderTextColor={theme.colors.muted}
               value={value}
               onChangeText={onChange}
               secureTextEntry
@@ -211,7 +211,7 @@ const SignUp = () => {
                 errors.confirmPassword && styles.inputError,
               ]}
               placeholder="••••••••"
-              placeholderTextColor={""}
+              placeholderTextColor={theme.colors.muted}
               value={value}
               onChangeText={onChange}
               secureTextEntry
@@ -230,7 +230,7 @@ const SignUp = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#808080" />
+            <ActivityIndicator color={theme.colors.primary} />
           ) : (
             <Text style={styles.buttonText}>Create Account</Text>
           )}
@@ -249,8 +249,6 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-// ── Styles ────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
   flex: {

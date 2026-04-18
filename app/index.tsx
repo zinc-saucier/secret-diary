@@ -1,6 +1,7 @@
 import { Redirect } from "expo-router";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useAuth } from "@/context/AuthContext";
+import { theme } from "@/styles/theme";
 
 export default function Index() {
   const { session, isLoading } = useAuth();
@@ -8,8 +9,8 @@ export default function Index() {
  
   if (isLoading) {
     return (
-      <View style={""}>
-        <ActivityIndicator size="large" color={""} />
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
       </View>
     );
   }
@@ -17,3 +18,12 @@ export default function Index() {
   //redirect to home if user logged in, to login if user = null
   return <Redirect href={session ? "/(tab)/home" : "/login"} />;
 }
+
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    padding: theme.spacing.screen,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+})

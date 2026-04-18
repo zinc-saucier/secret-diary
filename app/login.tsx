@@ -12,6 +12,7 @@ import {
   Text,
   TextInput,
   View,
+  ActivityIndicator
 } from "react-native";
 import { z } from "zod";
 import { useAuth } from "@/context/AuthContext"; 
@@ -118,7 +119,7 @@ return (
             <TextInput
               style={[styles.input, errors.password && ""]}
               placeholder="••••••••"
-              placeholderTextColor={""}
+              placeholderTextColor={theme.colors.muted}
               value={value}
               onChangeText={onChange}
               secureTextEntry
@@ -130,9 +131,18 @@ return (
           <Text style={styles.error}>{errors.password.message}</Text>
         )}
         {/* Submit button */}
-        <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
+        <Pressable
+          style={[styles.button, isSubmitting && styles.buttonDisabled]}
+          onPress={handleSubmit(onSubmit)}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <ActivityIndicator color={theme.colors.primary} />
+          ) : (
             <Text style={styles.buttonText}>Sign In</Text>
+          )}
         </Pressable>
+      
         {/* ── Link to Sign Up ── */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Don't have an account? </Text>
@@ -225,6 +235,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: theme.colors.button,
+    borderRadius: theme.radius.input,
+    padding: 16,
+    alignItems: "center",
+    marginTop: 28,
+  },
+  buttonDisabled: {
+    backgroundColor: theme.colors.muted,
     borderRadius: theme.radius.input,
     padding: 16,
     alignItems: "center",
