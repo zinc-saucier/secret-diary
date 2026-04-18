@@ -42,7 +42,7 @@ export default function TabLayout() {
           tabBarLabel: "My Diary",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? "cloud" : "cloud-outline"}
+              name={focused ? "book" : "book-outline"}
               size={size}
               color={color}
             />
