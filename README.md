@@ -1,4 +1,11 @@
 # README for Secret Diary
+-----
+
+Welcome to the super secure secret diary system! 
+
+To begin, please make an account! 
+
+be sure to remember your username and password, you wouldn't want to get logged out of your own journal. 
 
 -----
 
