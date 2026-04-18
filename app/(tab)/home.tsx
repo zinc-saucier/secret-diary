@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, View, ActivityIndicator, Pressable, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { useAuth } from "@/context/AuthContext";
-import {theme} from "@/styles/theme";
+import { theme } from "@/styles/theme";
+import React, { useState } from "react";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 
 const home = () => {
 
-    const { signOut } = useAuth();
-    const [signOutText, setSignoutText] = useState("Sign out?");
+  const { signOut } = useAuth();
+  const [signOutText, setSignoutText] = useState("Sign out?");
 
-    const { session, isLoading } = useAuth();
+  const { session, isLoading } = useAuth();
 
-    if (isLoading) {
+  if (isLoading) {
     return (
       <View style={""}>
         <ActivityIndicator size="large" color={""} />
@@ -31,20 +31,10 @@ const home = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-        >
-            <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="handled"
-          >
-    <View style={styles.header}>
-      <Text style={styles.h2}>Welcome to your Secret Diary {session?.user.user_metadata.display_name}</Text>
-      <Pressable onPress={handleSignOut}>
-        <Text>{signOutText}</Text>
-        
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to your Secret Diary {session?.user.user_metadata.display_name}</Text>
+      <Pressable onPress={handleSignOut} style={styles.logbutton}>
+        <Text style={styles.buttontext}>{signOutText}</Text>
       </Pressable>
     </View>
     </ScrollView>
@@ -59,101 +49,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.bg
   },
-  headerContainer: {
-    marginTop: 25,
-    alignItems: "center",
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 36,
-  },
-  h2: {
-    fontSize: 16,
-    fontWeight: "600",
-    margin: 15,
-    marginTop: 35,
-    textAlign: "center",
-  },
-  logoCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: "#e8f0fd",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
-  },
   title: {
-    fontSize: 28,
-    fontWeight: "800",
-    color: theme.colors.text,
+    textAlign: 'center',
+    fontSize: 30,
+    padding: 5,
+    marginTop: 45,
+    fontWeight: 700,
+    textDecorationLine: 'underline',
+    textDecorationColor: theme.colors.border,
+    textDecorationStyle: 'solid',
   },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 15,
-    color: theme.colors.muted,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: theme.colors.text,
-    marginBottom: 6,
-    marginTop: 16,
-  },
-  input: {
-    backgroundColor: theme.colors.inputbg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.input,
-    padding: 14,
-    fontSize: 16,
-    color: theme.colors.text,
-  },
-  errorBanner: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    backgroundColor: "#fef2f2",
-    borderWidth: 1,
-    borderColor: "#fecaca",
-    borderRadius: theme.radius.input,
-    padding: 12,
-    marginBottom: 16,
-  },
-  error: {
-    flex: 1,
-    fontSize: 16,
-    color: theme.colors.error,
-  },
-  content: {
-    padding: theme.spacing.screen,
-    paddingTop: 60,
-    flexGrow: 1,
-  },
-  button: {
+  logbutton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
     backgroundColor: theme.colors.button,
-    borderRadius: theme.radius.input,
-    padding: 16,
-    alignItems: "center",
-    marginTop: 28,
+    width: 100,
+    height: 100,
+    borderWidth: 2,
+    borderColor: theme.colors.border,
+    borderRadius: 200,
+    marginTop: 50,
   },
-  buttonText: {
-    color: theme.colors.bg,
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 24,
-  },
-  footerText: {
-    color: theme.colors.muted,
-    fontSize: 15,
-  },
-  footerLink: {
-    color: theme.colors.primary,
-    fontSize: 15,
-    fontWeight: "700",
-  },
-}) 
+  buttontext: {
+    textAlign: 'center',
+    fontWeight: 500,
+
+  }
+});

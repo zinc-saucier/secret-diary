@@ -18,10 +18,11 @@ const index = () => {
     remove(id);
   }
   return (
-    <View>
+    <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'My Secret Diary'
+          title: 'My Secret Diary',
+          headerTitleAlign: 'center',
         }} />
       <Pressable onPress={newNote}>
 
@@ -59,5 +60,9 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 12,
 
+  },
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.bg
   }
 })
