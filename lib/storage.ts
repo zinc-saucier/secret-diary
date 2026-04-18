@@ -3,7 +3,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const STORAGE_KEYS = {
-  diary: "diary",
+  diary: 'entries'
 
 } as const;
 
