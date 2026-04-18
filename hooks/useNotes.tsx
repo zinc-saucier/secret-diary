@@ -1,9 +1,10 @@
 import * as storage from '@/lib/storage';
 import { Note } from '@/types';
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 type NotesContextType = {
     notes: Note[]
     addNote: (title: string, body: string) => Note;
+    deleteNote: (id: string) => void;
 };
 
 
@@ -19,6 +20,20 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
             storage.set(note.id, note);
         }
         saveNote(note);
+
+    }
+    const deleteNote = (id: string) => {
+        let temp: Note[] = [];
+        for (let i: number = 0; i < notes.length; i++) {
+
+            if (notes[i].id == id) {
+
+            }
+            else {
+                temp = [...temp, notes[i]]
+            }
+        }
+        setNotes(temp);
     }
     const addNote = (title: string, body: string) => {
         const t = title.trim()
@@ -34,9 +49,11 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
         save(note);
         return note;
     }
+    useEffect(() => {
 
+    })
     return (
-        <NotesContext.Provider value={{ notes, addNote }}>
+        <NotesContext.Provider value={{ notes, addNote, deleteNote }}>
             {children}
         </NotesContext.Provider>
     )

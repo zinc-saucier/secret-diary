@@ -18,9 +18,6 @@ export const NoteItem = ({ item, onTogglePin, onRemove }: { item: Note, onToggle
                 <Text style={styles.noteTitle}>{item.title}</Text>
 
                 <View style={styles.actionContainer}>
-                    <Pressable onPress={() => onTogglePin(item.id)}>
-                        <Text style={styles.actionText}>pin</Text>
-                    </Pressable>
                     <Pressable onPress={onEdit}>
                         <Text style={styles.actionText}>Edit</Text>
                     </Pressable>
