@@ -1,18 +1,32 @@
+import { NoteItem } from '@/components/noteitem'
+import { useNotes } from '@/hooks/useNotes'
 import { theme } from '@/styles/theme'
-import { Link, Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 
 const index = () => {
+  const { notes } = useNotes();
+
+  const newNote = () => {
+    router.push('/Diary/note/new')
+  }
   return (
     <View>
       <Stack.Screen
         options={{
           title: 'My Secret Diary'
         }} />
-      <Link href={'./note/new'} asChild>
+      <Pressable onPress={newNote}>
+
         <Text style={styles.buttontxt}>Add Note</Text>
-      </Link>
+
+      </Pressable>
+
+      <FlatList data={notes}
+        keyExtractor={item => item.id}
+        renderItem={({ item, index }) => <NoteItem key={index} item={item} onTogglePin={() => true} onRemove={() => true} />}
+        style={styles.noteList} />
     </View>
   )
 }
@@ -31,5 +45,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginRight: 12,
     marginTop: 12
+  },
+  noteCard: {
+    color: theme.colors.text,
+  },
+  noteList: {
+    padding: 16,
+    gap: 12,
+
   }
 })

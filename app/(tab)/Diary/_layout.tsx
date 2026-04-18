@@ -1,12 +1,16 @@
+import { NotesProvider } from "@/hooks/useNotes";
 import { Stack } from "expo-router";
 
 export default function ProfileLayout() {
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{ title: "Diary", headerShown: false }}
-      />
-    </Stack>
+    <NotesProvider>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{ title: "Diary", headerShown: true }}
+        />
+        <Stack.Screen />
+      </Stack>
+    </NotesProvider>
   );
 }
