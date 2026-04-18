@@ -117,7 +117,7 @@ const SignUp = () => {
             <Ionicons
               name="book-outline"
               size={36}
-              color={""}
+              color={theme.colors.primary}
             />
           </View>
           <Text style={styles.title}>Create Account</Text>
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   button: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.button,
     borderRadius: theme.radius.input,
     padding: 16,
     alignItems: "center",

@@ -1,13 +1,13 @@
 export const theme = {
  colors: {
-    bg: "#f8fafc",
+    bg: "#f8e2fe",
     text: "#111827",
     muted: "#6b7280",
-    primary: "#2563eb",
-    border: "#e5e7eb",
+    primary: "#6025eb",
+    border: "#1f0167",
     error: "#dc2626",
-    button: "violet",
-    inputbg: "gray",
+    button: "#ec06fc",
+    inputbg: "#d093ff",
   },
    spacing: {
     screen: 20,
