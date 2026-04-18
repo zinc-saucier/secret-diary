@@ -37,6 +37,8 @@ const home = () => {
         <Text style={styles.buttontext}>{signOutText}</Text>
       </Pressable>
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
