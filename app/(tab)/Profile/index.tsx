@@ -9,10 +9,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  View
 } from "react-native";
 import { z } from "zod";
 //app-wide theme file
 import {theme} from "../../../styles/theme";
+import { useAuth } from "@/context/AuthContext";
 
 //form field validation goes here!
 
@@ -26,6 +28,9 @@ type ProfileForm = z.infer<typeof formSchema>;
 //the large 5 field form goes here!
 
 const form = () => {
+
+  const user = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -52,50 +57,18 @@ const form = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.h1}>Your Profile</Text>
-      {/*First Name */}
-      <Text style={styles.label}>First Name</Text>
-      <Controller
-        control={control}
-        name="name"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={[styles.input]}
-            placeholder="first name here"
-            placeholderTextColor={"gray"}
-            value={value}
-            onChangeText={onChange}
-            autoCapitalize="words"
-          />
-        )}
-      />
-      {errors.name && (
-        <Text style={styles.error}>{errors.name.message}</Text>
-      )}
+      <Text style={styles.title}>Your Profile</Text>
+      {/* Name */}
+      <Text style={styles.label}>User Name</Text>
+      <View style={styles.input}>
+        <Text style={styles.text}>{user.user?.user_metadata.display_name}</Text>
+      </View>
 
       {/*Email*/}
       <Text style={styles.label}>Email</Text>
-      <Controller
-        control={control}
-        name="email"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={[styles.input]}
-            placeholder="example@example.com"
-            placeholderTextColor={"gray"}
-            value={value}
-            onChangeText={onChange}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-        )}
-      />
-      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
-
-      {/* submit button */}
-      <Pressable style={[styles.button]} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </Pressable>
+      <View style={styles.input}>
+        <Text style={styles.text}>{user.user?.email}</Text>
+      </View>
     </ScrollView>
   );
 };
@@ -103,51 +76,43 @@ const form = () => {
 export default form;
 
 const styles = StyleSheet.create({
-  button: {
-    marginLeft: 15,
-    backgroundColor: "violet",
-    padding: 10,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-  buttonText: {
-    color: theme.colors.text,
-  },
   container: {
     flex: 1,
-    backgroundColor: theme.colors.bg,
+    backgroundColor: theme.colors.bg
   },
-  content: {
-    flex: 1,
-    alignContent: "center",
+  
+  header: {
+    alignItems: "center",
+    marginBottom: 36,
   },
-  h1: {
-    fontSize: 25,
-    fontWeight: "600",
-    margin: 15,
-    marginTop: 35,
-   
+  title: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: theme.colors.text,
   },
   label: {
-    marginLeft: theme.label.margin,
-    fontSize: theme.label.size,
-    fontWeight: "400",
+    fontSize: 14,
+    fontWeight: "600",
+    color: theme.colors.text,
+    marginBottom: 6,
+    marginTop: 16,
   },
   input: {
-    backgroundColor: theme.colors.border,
-    marginLeft: 15,
-    marginRight: 15,
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
+    backgroundColor: theme.colors.inputbg,
     borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.input,
+    padding: 14,
+    fontSize: 16,
+    color: theme.colors.text,
   },
-  error: {
-    backgroundColor: "red",
-    color: "white",
-    padding: 5,
-    marginLeft: 15,
-    marginRight: 15,
-    borderRadius: 5,
+  content: {
+    padding: theme.spacing.screen,
+    paddingTop: 60,
+    flexGrow: 1,
   },
-});
+  text: {
+    color: theme.colors.text,
+    fontSize: 15,
+  }
+}) 
